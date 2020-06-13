@@ -1,6 +1,6 @@
-# myvue
+# mall
 
-> A Vue.js project
+> mall
 
 ## Build Setup
 
