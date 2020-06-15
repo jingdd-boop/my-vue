@@ -2,11 +2,11 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import fastclic from 'fastclick'
+import fastclick from 'fastclick'
 
 import 'assets/scss/index.scss'
 
-fastclic.attack(document.body)
+fastclick.attach(document.body)
 
 Vue.config.productionTip = false
 
