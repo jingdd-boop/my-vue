@@ -21,15 +21,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "~assets/scss/mixins";
+   @import "~assets/scss/mixins";
     .header{
        &-mine-navbar{
-            // background-color: transparent;
-             background-color: $header-bgc-translucent;
+         background-color:#fff;
        }
 
         .iconfont{
-            color: $icon-color-default;
+            color: red;
             font-size: $icon-font-size;
         }
     }
