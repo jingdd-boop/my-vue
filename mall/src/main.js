@@ -5,6 +5,8 @@ import router from './router'
 import fastclick from 'fastclick'
 
 import 'assets/scss/index.scss'
+import 'swiper/swiper.scss'
+
 
 fastclick.attach(document.body)
 

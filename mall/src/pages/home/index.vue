@@ -21,7 +21,7 @@ export default {
     name: 'Home',
     components: {
         HomeHeader,
-        HomeSlider
+       HomeSlider
 
     }
 };

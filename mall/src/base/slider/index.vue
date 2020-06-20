@@ -1,8 +1,6 @@
 <template>
     <swiper :options="swiperOption">
-      <slot>
-          
-      </slot>
+      <slot></slot>
       <div class="swiper-pagination" v-if="pagination" slot="pagination">
 
       </div>
@@ -11,12 +9,11 @@
 </template>
 
 <script>
-import {swiper,swiperSlide} from 'vue-awesome-swiper';
+import {swiper} from 'vue-awesome-swiper';
 export default {
     name: 'MeSlider',
-    component: {
-        swiper,
-        swiperSlide
+    components: {
+        swiper
      },
      props: {
          direction: {
@@ -48,12 +45,27 @@ export default {
      },
      data() {
          return {
-             swiperOption
+             swiperOption:{
+                  direction: this.direction,
+          autoplay: this.interval ? {
+            delay: this.interval,
+            disableOnInteraction: false
+          } : false,
+           slidesPerView: 1,
+          loop: this.data.length <= 1 ? false : this.loop,
+          pagination: {
+            el: this.pagination ? '.swiper-pagination' : null
+          }
+
+             }
          };
      }
 };
 </script>
 
 <style lang="scss" scoped>
-
+.swiper-container{
+    width: 100%;
+    height: 100%;
+}
 </style>
