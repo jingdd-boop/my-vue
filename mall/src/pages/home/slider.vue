@@ -17,14 +17,14 @@
 
 <script>
 import MeSlider from 'base/slider';
-import {swiperSlide} from 'vue-awesome-swiper';
+import {SwiperSlide} from 'vue-awesome-swiper';
 import {sliderOptions} from './config'
 
 export default {
     name: 'HomeSlider',
     components: {
         MeSlider,
-        swiperSlide
+        SwiperSlide
     },
     data() {
         return {
@@ -66,8 +66,8 @@ export default {
     display: block;
 }
 .slider-link,
-.slide-img{
+.slider-img{
     width: 100%;
-    height:183px ;
+    height:100%;
 }
 </style>

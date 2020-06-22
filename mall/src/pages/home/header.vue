@@ -14,9 +14,10 @@ import MeNavbar from "base/navbar"
 
 export default {
     name: 'HomeHeader',
-    components: {
-        MeNavbar
-    }
+    components:  {
+        MeNavbar,
+        }
+    
 };
 </script>
 

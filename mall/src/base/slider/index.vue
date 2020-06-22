@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import {swiper} from 'vue-awesome-swiper';
+import {Swiper} from 'vue-awesome-swiper';
 export default {
     name: 'MeSlider',
     components: {
-        swiper
+        Swiper
      },
      props: {
          direction: {
@@ -45,14 +45,15 @@ export default {
      },
      data() {
          return {
-             swiperOption:{
-                  direction: this.direction,
+        swiperOption:{
+					 watchOverflow:true,
+            direction: this.direction,
           autoplay: this.interval ? {
             delay: this.interval,
             disableOnInteraction: false
           } : false,
            slidesPerView: 1,
-          loop: this.data.length <= 1 ? false : this.loop,
+          loop: this.loop,
           pagination: {
             el: this.pagination ? '.swiper-pagination' : null
           }
