@@ -1,10 +1,12 @@
 <template>
   <div class="slider-wrapper">
+       <me-loading v-if="!sliders.length"/>
         <me-slider 
     :direction="direction"
     :loop="loop"
     :interval="interval"
     :pagination="pagination"
+    v-else
     >
         <swiper-slide v-for="(item,index) in sliders" :key="index" >
             <a :href="item.linkUrl" class="slider-link">
@@ -18,13 +20,18 @@
 <script>
 import MeSlider from 'base/slider';
 import {SwiperSlide} from 'vue-awesome-swiper';
-import {sliderOptions} from './config'
+import {sliderOptions} from './config';
+import {getHomeSlider} from 'api/home';
+import MeLoading from 'base/loading';
+
+
 
 export default {
     name: 'HomeSlider',
     components: {
         MeSlider,
-        SwiperSlide
+        SwiperSlide,
+        MeLoading
     },
     data() {
         return {
@@ -33,25 +40,20 @@ export default {
          interval:sliderOptions.interval,
          pagination: sliderOptions.pagination,
 
-        sliders: [
-             {
-          'linkUrl':'https://www.imooc.com',
-          'picUrl':require('./1.jpg')
-         },
-         {
-         'linkUrl':'https://www.imooc.com',
-         'picUrl':require('./2.jpg')
-         },
-        {
-          'linkUrl':'https://www.imooc.com',
-         'picUrl':require('./3.jpg')
-        },{
-         'linkUrl':'https://www.imooc.com',
-         'picUrl':require('./4.jpg')
+        sliders: []
+        };
+    },
+    created() {
+        this.getSliders();
+    },
+    methods:{
+        getSliders(){
+            getHomeSlider().then(data => {
+                this.sliders = data;
+
+            })
         }
 
-            ]
-        }
     }
 };
 </script>
