@@ -46,7 +46,7 @@ export default {
      data() {
          return {
         swiperOption:{
-					 watchOverflow:true,
+			 watchOverflow:true,
             direction: this.direction,
           autoplay: this.interval ? {
             delay: this.interval,
