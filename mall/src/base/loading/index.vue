@@ -34,27 +34,25 @@ export default {
 <style lang="scss" scoped>
    @import "~assets/scss/mixins";
 
-  .mine-loading{
+  .mine-loading {
     overflow: hidden;
     width: 100%;
     height: 100%;
     @include flex-center(column);
 
-    
-  }
-  .mine-loading .mine-loading-inline{
+    &.mine-loading-inline {
       flex-direction: row;
 
-      .mine-loading-indicator ~ .mine-loading-text{
-
-        margin-top: 0px;
+      .mine-loading-indicator ~ .mine-loading-text {
+        margin-top: 0;
         margin-left: 6px;
-}
-
+      }
+    }
   }
 
-.mine-loading-indicator ~ .mine-loading-text{
-  margin-top: 6px;
-}
+  .mine-loading-indicator ~ .mine-loading-text {
+    margin-top: 6px;
+  }
+
 
 </style>

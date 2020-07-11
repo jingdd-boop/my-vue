@@ -24,16 +24,16 @@ const parseParam = param => {
 }
 
 
-export default (url, data,Options) => {
- url += (url.index('?') < 0 ? '?' : '&') + parseParam(data);
+export default (url, data, options) => {
+  url += (url.indexOf('?') < 0 ? '?' : '&') + parseParam(data);
 
- return new Promise((resolve,reject) => {
-   jsonp(url,options,(err,data) => {
-      if(err){
+  return new Promise((resolve, reject) => {
+    jsonp(url, options, (err, data) => {
+      if (err) {
         reject(err);
-      } else{
+      } else {
         resolve(data);
       }
-   });
- });
+    });
+  });
 };

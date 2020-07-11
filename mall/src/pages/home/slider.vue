@@ -1,75 +1,98 @@
 <template>
-  <div class="slider-wrapper">
-       <me-loading v-if="!sliders.length"/>
-        <me-slider 
-    :direction="direction"
-    :loop="loop"
-    :interval="interval"
-    :pagination="pagination"
-    v-else
-    >
-        <swiper-slide v-for="(item,index) in sliders" :key="index" >
-            <a :href="item.linkUrl" class="slider-link">
-                <img :src="item.picUrl" alt="" class="slider-img">
-            </a>
-        </swiper-slide>
-    </me-slider>
-  </div>
+  <swiper :options="swiperOption" :key="keyId">
+    <!--<swiper-slide v-for="item in sliders">-->
+      <!--<a href="">-->
+        <!--<img src="" alt=""/>-->
+      <!--</a>-->
+    <!--</swiper-slide>-->
+    <slot></slot>
+    <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
+  </swiper>
 </template>
 
 <script>
-import MeSlider from 'base/slider';
-import {SwiperSlide} from 'vue-awesome-swiper';
-import {sliderOptions} from './config';
-import {getHomeSlider} from 'api/home';
-import MeLoading from 'base/loading';
-
-
-
-export default {
-    name: 'HomeSlider',
+  import {Swiper} from 'vue-awesome-swiper';
+  export default {
+    name: 'MeSlider',
     components: {
-        MeSlider,
-        SwiperSlide,
-        MeLoading
+      Swiper
+    },
+    props: {
+      direction: {
+        type: String,
+        default: 'horizontal',
+        validator(value) {
+          return [
+            'horizontal',
+            'vertical'
+          ].indexOf(value) > -1;
+        }
+      },
+      interval: {
+        type: Number,
+        default: 3000,
+        validator(value) {
+          return value >= 0;
+        }
+      },
+      loop: {
+        type: Boolean,
+        default: true
+      },
+      pagination: {
+        type: Boolean,
+        default: true
+      },
+      data: {
+        type: Array,
+        default() {
+          return [];
+        }
+      }
+
     },
     data() {
-        return {
-        direction: sliderOptions.direction,
-         loop: sliderOptions. loop,
-         interval:sliderOptions.interval,
-         pagination: sliderOptions.pagination,
+      return {
+        keyId: Math.random()
+      };
+    },
+    watch: {
+      data(newData) {
+        if (newData.length === 0) {
+          return;
+        }
+        this.swiperOption.loop = newData.length === 1 ? false : this.loop;
+        this.keyId = Math.random();
+      }
 
-        sliders: []
-        };
     },
     created() {
-        this.getSliders();
+      this.init();
     },
-    methods:{
-        getSliders(){
-            getHomeSlider().then(data => {
-                this.sliders = data;
-
-            })
-        }
-
+    methods: {
+      init() {
+        this.swiperOption = {
+          watchOverflow: true,
+          direction: this.direction,
+          autoplay: this.interval ? {
+            delay: this.interval,
+            disableOnInteraction: false
+          } : false,
+          slidesPerView: 1,
+          loop: this.data.length <= 1 ? false : this.loop,
+          pagination: {
+            el: this.pagination ? '.swiper-pagination' : null
+          }
+        };
+      }
     }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.slider-wrapper {
-   
-    height: 183px;
-}
-
-.slider-link{
-    display: block;
-}
-.slider-link,
-.slider-img{
+  .swiper-container {
     width: 100%;
-    height:100%;
-}
+    height: 100%;
+  }
+
 </style>
