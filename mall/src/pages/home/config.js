@@ -1,4 +1,4 @@
-export const sliderOptions = {
+export const sliderOption = {
     direction: "horizontal",
     loop: true,
     interval: 0,

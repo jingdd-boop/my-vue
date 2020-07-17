@@ -110,20 +110,21 @@ export default {
 
     &-pic {
       position: relative;
+      margin-bottom: 5px;
       width: 100%;
       padding-top: 100%;
-      margin-bottom: 5px;
-    }
 
+    }
     &-img {
-      position: absolute;
-      top: 0;
+     position: relative;
+     top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 6px;
+
     }
-     &-name {
+
+   &-name {
       height: 36px;
       padding: 0 5px;
       margin-bottom: 8px;
@@ -151,15 +152,17 @@ export default {
       font-size: 20px;
     }
 
- &-count {
+    &-count {
       color: #999;
     }
   }
-
-  .loading-container {
+ .loading-container {
     padding-top: 100px;
   }
 
+     
+  
 
+  
   
 </style>

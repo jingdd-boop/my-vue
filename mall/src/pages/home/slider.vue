@@ -1,96 +1,96 @@
 <template>
-  <swiper :options="swiperOption" :key="keyId">
-    <!--<swiper-slide v-for="item in sliders">-->
-      <!--<a href="">-->
-        <!--<img src="" alt=""/>-->
-      <!--</a>-->
-    <!--</swiper-slide>-->
-    <slot></slot>
-    <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
-  </swiper>
+  <div class="slider-wapper">
+    <me-loading v-if="!sliders.length"/>
+    <me-slider
+      :data="sliders"
+      :direction="direction"
+      :loop="loop"
+      :interval="interval"
+      :pagination="pagination"
+      v-else
+      >
+      <swiper-slide
+          v-for="(item, index) in sliders"
+          :key="index"
+        >
+        <a :href="item.linkUrl" alt="" class='slider-link'>
+          <img :src="item.picUrl" alt="" class='slider-img'>
+        </a>
+      </swiper-slide>
+    </me-slider>
+  </div>
 </template>
 
 <script>
-  import {Swiper} from 'vue-awesome-swiper';
-  export default {
-    name: 'MeSlider',
-    components: {
-      Swiper
-    },
-    props: {
-      direction: {
-        type: String,
-        default: 'horizontal',
-        validator(value) {
-          return [
-            'horizontal',
-            'vertical'
-          ].indexOf(value) > -1;
-        }
-      },
-      interval: {
-        type: Number,
-        default: 3000,
-        validator(value) {
-          return value >= 0;
-        }
-      },
-      loop: {
-        type: Boolean,
-        default: true
-      },
-      pagination: {
-        type: Boolean,
-        default: true
-      },
-      data: {
-        type: Array,
-        default() {
-          return [];
-        }
-      }
+  import MeSlider from 'base/slider';
+  import {SwiperSlide} from 'vue-awesome-swiper';
+  import {sliderOption} from './config';
+  import {getHomeSlider} from 'api/home';
+  import MeLoading from 'base/loading';
 
+  export default {
+
+    name: 'HomeSlider',
+    components: {
+      MeSlider,
+      MeLoading,
+      SwiperSlide
     },
     data() {
       return {
-        keyId: Math.random()
+        direction: sliderOption.direction,
+        loop: sliderOption.loop,
+        interval: sliderOption.interval,
+        pagination: sliderOption.pagination,
+        sliders: []
+        // {
+        //  'linkUrl':'https://www.imooc.com',
+        //  'picUrl':require('./1.jpg')
+        // },
+        // {
+        //  'linkUrl':'https://www.imooc.com',
+        //  'picUrl':require('./2.jpg')
+        // },
+        // {
+        //  'linkUrl':'https://www.imooc.com',
+        //  'picUrl':require('./3.jpg')
+        // },{
+        //  'linkUrl':'https://www.imooc.com',
+        //  'picUrl':require('./4.jpg')
+        // }
       };
     },
-    watch: {
-      data(newData) {
-        if (newData.length === 0) {
-          return;
-        }
-        this.swiperOption.loop = newData.length === 1 ? false : this.loop;
-        this.keyId = Math.random();
-      }
-
-    },
     created() {
-      this.init();
+      this.getSliders();
     },
     methods: {
-      init() {
-        this.swiperOption = {
-          watchOverflow: true,
-          direction: this.direction,
-          autoplay: this.interval ? {
-            delay: this.interval,
-            disableOnInteraction: false
-          } : false,
-          slidesPerView: 1,
-          loop: this.data.length <= 1 ? false : this.loop,
-          pagination: {
-            el: this.pagination ? '.swiper-pagination' : null
-          }
-        };
+      update() {
+        return this.getSliders();
+      },
+      getSliders() {
+        return getHomeSlider().then(data => {
+          this.sliders = data;
+        });
       }
     }
+
   };
 </script>
 
 <style lang="scss" scoped>
-  .swiper-container {
+
+  .slider-wapper {
+    width: 100%;
+    height: 183px;
+  }
+
+  .slider-link {
+    display: block;
+  }
+
+  .slider-link,
+  .slider-img {
+    overflow: hidden;
     width: 100%;
     height: 100%;
   }
